@@ -123,23 +123,29 @@ class Sensor():
             switch_z=True
         return switch_x,switch_y,switch_z
         
-    def gyro_list(self):
+    def gyro_list(self,rate):
         ax = self.read_raw_data(0x3B)
         ay = self.read_raw_data(0x3D)
         az = self.read_raw_data(0x3F)
         angle_x = math.atan2(ay, az) * 180 / math.pi
         angle_y = math.atan2(ax, az) * 180 / math.pi
         angle_z = math.atan2(ax, ay) * 180 / math.pi
-        if (angle_x > 0):
+        if (angle_x > rate):
             sw_x=1
+        elif (angle_x < -rate):
+            sw_x=-1
         else:
             sw_x=0
-        if (angle_y > 0):
+        if (angle_y > rate):
             sw_y=1
+        elif (angle_y < -rate):
+            sw_y=-1
         else:
             sw_y=0
-        if (angle_z > 0):
+        if (angle_z > rate):
             sw_z=1
+        elif (angle_z < -rate):
+            sw_z=-1
         else:
             sw_z=0
        
