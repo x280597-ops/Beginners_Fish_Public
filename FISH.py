@@ -31,13 +31,15 @@ class Display():
     def rect(self,start_x,start_y,end_x,end_y,color):
         self.display.fill_rect(start_x,start_y,end_x,end_y ,color)
     def set_display(self):
+        pass
+    def clear(self):
         self.display.fill(st7789.BLACK)
     def text(self,text,start_x,start_y,color,text_scale):
         self.display.text(text,start_x,start_y,color,scale=text_scale)
 class Button():
     def __init__(self):
-        self.button_1 = Pin(15, Pin.IN, Pin.PULL_UP)
-        self.button_2 = Pin(14, Pin.IN, Pin.PULL_UP)
+        self.button_1 = Pin(14, Pin.IN, Pin.PULL_UP)
+        self.button_2 = Pin(15, Pin.IN, Pin.PULL_UP)
         self.button_reset=Pin(13, Pin.IN, Pin.PULL_UP)
         self.button_start=Pin(12, Pin.IN, Pin.PULL_UP)
     def r_push(self):
