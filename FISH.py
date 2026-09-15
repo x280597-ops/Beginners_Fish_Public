@@ -11,6 +11,7 @@ def color565(r, g, b):
     )
 BLACK = color565(0,0,0)
 WHITE = color565(255,255,255)
+YELLOW = color565(255,255,0)
 RED   = color565(255,0,0)
 GREEN = color565(0,255,0)
 BLUE  = color565(0,0,255)
@@ -43,13 +44,13 @@ class Button():
         self.button_reset=Pin(13, Pin.IN, Pin.PULL_UP)
         self.button_start=Pin(12, Pin.IN, Pin.PULL_UP)
     def r_push(self):
-        if self.button_1.value() == 0:
+        if self.button_2.value() == 0:
             flug=True
         else:
             flug=False
         return flug
     def l_push(self):
-        if self.button_2.value() == 0:
+        if self.button_1.value() == 0:
             flug=True
         else:
             flug=False
