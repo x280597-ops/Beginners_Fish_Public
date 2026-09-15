@@ -74,9 +74,8 @@ class Sensor():
         self.ADDR_gyro = 0x68
         
         #温湿度
-        #self.i2c_temp.writeto(self.ADDR_temp, b'\x24\x00')
+        self.i2c_temp.writeto(self.ADDR_temp, b'\x24\x00')
         self.i2c_gyro.writeto_mem(self.ADDR_gyro,0x6B,b'\x00')
-        #self.data_temp_hum = self.i2c_temp.readfrom(self.ADDR_temp, 6)
     def read_raw_data(self,addr):
         self.data = self.i2c_gyro.readfrom_mem(self.ADDR_gyro,addr,2)
         value = (self.data[0] << 8) | self.data[1]
@@ -85,16 +84,21 @@ class Sensor():
             value -= 65536
 
         return value
+    def read_temp_hum(self):
+        self.i2c_temp.writeto( self.ADDR_temp, b'\x24\x00')
+        time.sleep_ms(20)
+        data = self.i2c_temp.readfrom(self.ADDR_temp, 6 )
+        temp_raw = (data[0] << 8) | data[1]
+        hum_raw = (data[3] << 8) | data[4]
+        temperature = -45 + 175 * temp_raw / 65535
+        humidity = 100 * hum_raw / 65535
+        return round(temperature, 2), round(humidity, 2)
     def temp(self):
-        temp_raw = self.data_temp_hum[0] << 8 | self.data_temp_hum[1]
-        temperature = -45 + 175 * (temp_raw / 65535)
-        temp_data=round(temperature,2)
-        return temp_data
+        temperature, humidity = self.read_temp_hum()
+        return temperature
     def hum(self):
-        hum_raw  = self.data_temp_hum[3] << 8 | self.data_temp_hum[4]
-        humidity = 100 * (hum_raw / 65535)
-        hum_data=round(humidity,2)
-        return hum_data
+        temperature, humidity = self.read_temp_hum()
+        return humidity
     def gyro(self):
         # ジャイロ
         gx = self.read_raw_data(0x43)
