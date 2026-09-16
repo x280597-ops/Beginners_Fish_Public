@@ -7,11 +7,6 @@ gamelist,game_updatelist=read_files.load_file()
 game_flug = False
 game_num=0
 game_num_max=len(gamelist)-1
-def draw_B_F():
-    main_display.rect(48, 140, 56, 24, FISH.BLUE)
-    main_display.rect(104, 146, 10, 12, FISH.YELLOW)
-    main_display.rect(114, 140, 20, 24, FISH.YELLOW)
-    main_display.rect(54, 143, 6, 6, FISH.BLACK)
 def draw_set():
     main_display.fill(FISH.BLACK)
 draw_set()
@@ -35,7 +30,7 @@ while True:
                 game_num=game_num_max
             main_display.rect(0,0,20,30,FISH.RED)
         main_display.text("BIGINNERS FISH", 30, 60, FISH.WHITE, 2)
-        draw_B_F()
+        main_display.draw_B_F(85,110)
         main_display.text("Game_Number:", 50, 190, FISH.WHITE, 2)
         main_display.text(str(game_num),205,185,FISH.WHITE,3)
         if main_button.start_btn():

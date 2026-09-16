@@ -15,6 +15,74 @@ YELLOW = color565(255,255,0)
 RED   = color565(255,0,0)
 GREEN = color565(0,255,0)
 BLUE  = color565(0,0,255)
+# ========================================
+# B_F.png 48x48 ドット絵
+# ========================================
+
+B_F = [
+    "................................................",
+    "......................................AAAAAAA...",
+    ".............AAAAAAAAAAA............AACCCCCCC...",
+    "............AACAACCAACCAA..........ACCCCCCCCCA..",
+    "...........AACCACCCACCCCA........AACCCCCCCCCCA..",
+    "...........ACCCBBBBBBBBCA......AACCCCAAAAAACCA..",
+    "...........ABBBBBBBBBBBBB.....ACCCCAAACCCCCAAA..",
+    "...........BBBBBBDDDDDBBBBBBBBCCCAAACCCCCCCCCCA.",
+    "..........BBBDDFFDDDDDDDDDBBBBBBAAAAAAAAAAAAAAA.",
+    ".........BDDDDDFFDDDDDDDDDDDDBBBBAAAAAACCCCCCAA.",
+    ".........BDDDDDDDDDDDDDDDDDDDDDBBBB....ACCCCCCA.",
+    ".........BBBBBBDDDDDDDDDDDDDDDDDDBBB....AAACCCA.",
+    ".............BBDDDDDDDDDDDDDDDDDDDDBB......ACA..",
+    ".............BDDDDDDDDDDDDDDDDDDDDDBBB......AA..",
+    "............BEDDDDDDDDDDDDDDDDDDDDDDBB..........",
+    "...........BBEEEEEEEEEEEEEDDDDDDDDDDDBB.........",
+    "...........BBEEEEEEBBBBBEEEEDDDDDDDDDBBB........",
+    "............BBBBBBBBBBBBBBEEEDDDDDDDDDBB........",
+    "....................ACBBBBBEEEDDDDDDDDBB........",
+    "...................ACAAABBBBEEDDDDDDDDBB........",
+    "..................ACAACA..BBBEEDDDDDDDBB........",
+    ".................ACAAACA...BBEEDDDDDDBBB........",
+    ".................ACAAACA...BBBEDDDDDDBB.........",
+    ".................AAAACCA.....BEDDDDDBBB.........",
+    "................ACACACCA.....BEDDDDDBB..........",
+    "................ACACACCA.....BEDDDDBB...........",
+    "................ACACACCA....BBEDDDDBB...........",
+    "...............ACACCACCA....BBEDDDBB............",
+    "...............ACACCACCA....BEEDDDBB............",
+    "...............ACACCACCA....BEDDDBB.............",
+    "..............ACCACCACCA....BEDDBBB.............",
+    "..............ACCACCACCA...BBEDDBB..............",
+    "..............AACACCACCA...BEEDDB...............",
+    "................AAACACCA...BEDDDB...............",
+    "...................AACCA..BEEDDBB...............",
+    ".....................AAA..BEEDDB................",
+    ".........................BEEDDBB................",
+    ".........................BEEDBB.................",
+    ".........................BEEDB..................",
+    "....................AAAAAAEDBB..................",
+    "...................AACCCCABBB...................",
+    "..................AACCCCCAAA....................",
+    "..................AAAAAACCCA....................",
+    ".......................ACCAA....................",
+    ".......................ACCA.....................",
+    ".......................AAAA.....................",
+    ".......................AA.......................",
+    "................................................",
+]
+
+
+# 色
+B_F_COLOR = {
+    "A": color565(0, 255, 128),
+    "B": color565(0, 254, 254),
+    "C": color565(0, 64, 0),
+    "D": color565(0, 64, 64),
+    "E": color565(0, 96, 96),
+    "F": color565(192, 192, 0),
+}
+
+
+# 描画
 class Display():
     def __init__(self):
         self.spi = SPI( 0,baudrate=40000000,polarity=1,phase=1,sck=Pin(18),mosi=Pin(19))
@@ -37,6 +105,11 @@ class Display():
         self.display.fill(st7789.BLACK)
     def text(self,text,start_x,start_y,color,text_scale):
         self.display.text(text,start_x,start_y,color,scale=text_scale)
+    def draw_B_F(self,x, y):
+        for py, row in enumerate(B_F):
+          for px, c in enumerate(row):
+            if c != ".":
+                self.display.pixel(x + px,y + py,B_F_COLOR[c])
 class Button():
     def __init__(self):
         self.button_1 = Pin(14, Pin.IN, Pin.PULL_UP)
